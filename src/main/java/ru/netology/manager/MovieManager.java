@@ -10,9 +10,13 @@ import ru.netology.repository.CartRepository;
 @AllArgsConstructor
 @Data
 public class MovieManager {
-    private MovieInfo[] movies = new MovieInfo[0];
 
+    private MovieInfo[] movies = new MovieInfo[0];
     private int maxMovies = 10;
+
+    MovieManager(int maxMovies) {
+        this.maxMovies = maxMovies;
+    }
 
     // this method will add movie to the collection we keep inside the class
     public void add(MovieInfo movie) {
@@ -29,11 +33,17 @@ public class MovieManager {
     }
 
     public MovieInfo[] getLastAdded() {
+        int count = Math.min(movies.length, this.maxMovies);
 
+        MovieInfo[] items  = getAll();
+        MovieInfo[] result = new MovieInfo[count];
+        System.arraycopy(items, 0, result, 0, count);
+
+        return result;
     }
 
     public MovieInfo[] getAll() {
-        MovieInfo[] items = findAll();
+        MovieInfo[] items  = findAll();
         MovieInfo[] result = new MovieInfo[items.length];
         for (int i = 0; i < result.length; i++) {
             int index = items.length - i - 1;
