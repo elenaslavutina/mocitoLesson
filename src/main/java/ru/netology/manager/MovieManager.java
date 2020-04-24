@@ -14,7 +14,7 @@ public class MovieManager {
 
     private int maxMovies = 10;
 
-    // lovely movies will be added here  
+    // this method will add movie to the collection we keep inside the class
     public void add(MovieInfo movie) {
         int length = movies.length + 1;
         MovieInfo[] tmp = new MovieInfo[length];
@@ -25,8 +25,7 @@ public class MovieManager {
     }
 
     public MovieInfo[] findAll() {
-
-        return null;
+        return movies;
     }
 
     public MovieInfo[] getLastAdded() {
