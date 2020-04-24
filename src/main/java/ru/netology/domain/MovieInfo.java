@@ -12,4 +12,8 @@ public class MovieInfo {
     private String title;
     private int releaseDate;
     private String genry;
+
+    public int getId() {
+        return id;
+    }
 }

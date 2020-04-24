@@ -11,29 +11,26 @@ import ru.netology.repository.CartRepository;
 @Data
 public class MovieManager {
     private MovieInfo[] movies = new MovieInfo[0];
-    private MovieInfo movie = new MovieInfo();
 
-    public MovieManager(MovieInfo movie) {
-       this.movie = movie;
-    }
-
+    private int maxMovies = 10;
 
 
     public void add(MovieInfo movie) {
-              
-            int length = movies.length + 1;
-            MovieInfo[] tmp = new MovieInfo[length];
-            System.arraycopy(movies, 0, tmp, 0, movies.length);
-            int lastIndex = tmp.length - 1;
-            tmp[lastIndex] = movie;
-            movies = tmp;
-        }
-        
-        
+        int length = movies.length + 1;
+        MovieInfo[] tmp = new MovieInfo[length];
+        System.arraycopy(movies, 0, tmp, 0, movies.length);
+        int lastIndex = tmp.length - 1;
+        tmp[lastIndex] = movie;
+        movies = tmp;
+    }
+
     public MovieInfo[] findAll() {
         return movies;
     }
 
+    public MovieInfo[] getLastAdded() {
+
+    }
 
     public MovieInfo[] getAll() {
         MovieInfo[] items = findAll();
@@ -57,9 +54,4 @@ public class MovieManager {
         }
         movies = tmp;
     }
-        
-
-
 }
-    
-

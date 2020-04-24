@@ -18,7 +18,7 @@ public class CartManager {
 
 
     public PurchaseItem[] getAll() {
-        PurchaseItem[] items = repository.findAll();
+        PurchaseItem[] items  = repository.findAll();
         PurchaseItem[] result = new PurchaseItem[items.length];
         for (int i = 0; i < result.length; i++) {
             int index = items.length - i - 1;

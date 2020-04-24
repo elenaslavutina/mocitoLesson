@@ -8,13 +8,13 @@ import ru.netology.domain.MovieInfo;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 
 
-@ExtendWith(MockitoExtension.class)
+//@ExtendWith(MockitoExtension.class)
 public class MovieManagerTest {
 
  //   @Mock
  //   private CartRepository repository;
  //   @InjectMocks
-    private MovieManager manager;
+    private MovieManager manager = new MovieManager();
     private MovieInfo first = new MovieInfo(1, "Lake house", 1998, "melodrama");
     private MovieInfo second = new MovieInfo(2,  "Oscar", 1976, "comedy");
     private MovieInfo third = new MovieInfo(3,  "Force majeure", 2010, "comedy");
@@ -46,13 +46,13 @@ public class MovieManagerTest {
 
     @Test
     public void shouldNotRemoveIfNotExists() {
-        int idToRemove = 4;
+        int idToRemove = 1;
         MovieInfo[] returned = new MovieInfo[]{first, second, third};
-     //   doReturn(returned).when(repository).findAll();
-       // doNothing().when(repository).removeById(idToRemove);
+        // doReturn(returned).when(repository).findAll();
+        // doNothing().when(repository).removeById(idToRemove);
 
         manager.removeById(idToRemove);
-        MovieInfo[] expected = new MovieInfo[]{third, second, first};
+        MovieInfo[] expected = new MovieInfo[]{third, second};
         MovieInfo[] actual = manager.getAll();
 
         assertArrayEquals(expected, actual);
