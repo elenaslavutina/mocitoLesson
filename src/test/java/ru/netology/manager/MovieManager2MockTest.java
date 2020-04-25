@@ -14,7 +14,7 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class MovieManager2TestMock {
+public class MovieManager2MockTest {
 
     @Mock
     private MovieRepository repository;

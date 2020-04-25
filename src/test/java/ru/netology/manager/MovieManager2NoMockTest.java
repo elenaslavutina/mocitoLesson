@@ -4,9 +4,12 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.MovieInfo;
 import ru.netology.repository.MovieRepository;
 
-import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import java.util.Random;
 
-public class MovieManager2TestNoMock {
+import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+
+public class MovieManager2NoMockTest {
 
     MovieRepository repository = new MovieRepository();
 
@@ -112,5 +115,51 @@ public class MovieManager2TestNoMock {
         MovieInfo[] actual = customManager.getAll();
 
         assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldFindById() {
+
+        MovieManager2 customManager = new MovieManager2(repository);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        Random rand = new Random();
+
+        int idx = rand.nextInt(list_of_movies.length);
+
+        // add items for expected output
+        MovieInfo expected = list_of_movies[idx];
+
+        // since we numerates IDs in list_of_movies from 1 we need to send idx + 1
+        MovieInfo actual = customManager.findById(idx+1);
+
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldReturnNullIfFindByIdCalledwithNonExistingID() {
+
+        MovieManager2 customManager = new MovieManager2(repository);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        Random rand = new Random();
+
+        int idx = list_of_movies.length + rand.nextInt(100);
+
+        // add items for expected output
+        MovieInfo expected = null;
+
+        // since we numerates IDs in list_of_movies from 1 we need to send idx + 1
+        MovieInfo actual = customManager.findById(idx+1);
+
+        assertEquals(expected, actual);
     }
 }
