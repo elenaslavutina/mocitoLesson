@@ -94,4 +94,23 @@ public class MovieManager2TestNoMock {
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldRemoveAll() {
+
+        MovieManager2 customManager = new MovieManager2(repository);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        // add items for expected output
+        MovieInfo[] expected = new MovieInfo[0];
+
+        customManager.removeAll();
+        MovieInfo[] actual = customManager.getAll();
+
+        assertArrayEquals(expected, actual);
+    }
 }

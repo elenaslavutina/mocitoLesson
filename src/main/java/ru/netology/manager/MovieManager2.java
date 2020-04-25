@@ -47,7 +47,7 @@ public class MovieManager2 {
         movieRepository.removeById(id);
     }
 
-    public void removeAll(int id) { movieRepository.removeAll(); }
+    public void removeAll() { movieRepository.removeAll(); }
 
     public MovieInfo findById(int id) { return movieRepository.findById(id); }
 
