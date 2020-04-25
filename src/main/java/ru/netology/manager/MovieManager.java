@@ -2,7 +2,6 @@ package ru.netology.manager;
 
 
 import ru.netology.domain.MovieInfo;
-import ru.netology.repository.CartRepository;
 
 public class MovieManager {
 

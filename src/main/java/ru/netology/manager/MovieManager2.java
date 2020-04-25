@@ -1,10 +1,8 @@
 package ru.netology.manager;
 
-import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import ru.netology.domain.MovieInfo;
-import ru.netology.repository.CartRepository;
 import ru.netology.repository.MovieRepository;
 
 @NoArgsConstructor
