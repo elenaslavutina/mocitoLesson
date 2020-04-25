@@ -1,14 +1,9 @@
 package ru.netology.manager;
 
-import lombok.AllArgsConstructor;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+
 import ru.netology.domain.MovieInfo;
 import ru.netology.repository.CartRepository;
 
-@NoArgsConstructor
-@AllArgsConstructor
-@Data
 public class MovieManager {
 
     private MovieInfo[] movies = new MovieInfo[0];
