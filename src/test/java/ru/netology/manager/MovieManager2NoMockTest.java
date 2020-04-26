@@ -89,8 +89,8 @@ public class MovieManager2NoMockTest {
 
         // add items for expected output
         MovieInfo[] expected = new MovieInfo[addedMovies];
-        for (int i = (addedMovies - 1); i >=0; i--) {
-            expected[(addedMovies - 1)-i] = list_of_movies[i];
+        for (int i = (addedMovies - 1); i >= 0; i--) {
+            expected[(addedMovies - 1) - i] = list_of_movies[i];
         }
 
         MovieInfo[] actual = customManager.getLastAdded();
@@ -135,10 +135,31 @@ public class MovieManager2NoMockTest {
         MovieInfo expected = list_of_movies[idx];
 
         // since we numerates IDs in list_of_movies from 1 we need to send idx + 1
-        MovieInfo actual = customManager.findById(idx+1);
+        MovieInfo actual = customManager.findById(idx + 1);
 
         assertEquals(expected, actual);
     }
+
+
+    @Test
+    public void shouldRemoveById() {
+
+        MovieManager2 customManager = new MovieManager2(repository);
+        MovieInfo first = new MovieInfo(1, "Lake house", 1998, "melodrama");
+        MovieInfo second = new MovieInfo(2, "Oscar", 1976, "comedy");
+        MovieInfo third = new MovieInfo(3, "Force majeure", 2010, "comedy");
+
+        customManager.add(first);
+        customManager.add(second);
+        customManager.add(third);
+
+        customManager.removeById(2);
+        MovieInfo[] expected = new MovieInfo[]{third, first};
+        MovieInfo[] actual = customManager.getAll();
+        assertArrayEquals(expected, actual);
+
+    }
+
 
     @Test
     public void shouldReturnNullIfFindByIdCalledwithNonExistingID() {
@@ -158,7 +179,7 @@ public class MovieManager2NoMockTest {
         MovieInfo expected = null;
 
         // since we numerates IDs in list_of_movies from 1 we need to send idx + 1
-        MovieInfo actual = customManager.findById(idx+1);
+        MovieInfo actual = customManager.findById(idx + 1);
 
         assertEquals(expected, actual);
     }

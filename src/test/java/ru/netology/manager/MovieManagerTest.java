@@ -46,36 +46,24 @@ public class MovieManagerTest {
     @Test
     public void shouldRemoveIfExists() {
         int idToRemove = 1;
-        // настройка заглушки
-        MovieInfo[] returned = new MovieInfo[]{second, third};
-        // doReturn(returned).when(repository).findAll();
-        // doNothing().when(repository).removeById(idToRemove);
 
         manager.removeById(idToRemove);
         MovieInfo[] expected = new MovieInfo[]{third, second};
         MovieInfo[] actual = manager.getAll();
         assertArrayEquals(expected, actual);
 
-        // удостоверяемся, что заглушка была вызвана с нужным значением
-        // но это уже проверка "внутренней" реализации
-        // verify(repository).removeById(idToRemove);
     }
 
     @Test
     public void shouldNotRemoveIfNotExists() {
         int idToRemove = 1;
-        MovieInfo[] returned = new MovieInfo[]{first, second, third};
-        // doReturn(returned).when(repository).findAll();
-        // doNothing().when(repository).removeById(idToRemove);
 
         manager.removeById(idToRemove);
         MovieInfo[] expected = new MovieInfo[]{third, second};
         MovieInfo[] actual = manager.getAll();
 
         assertArrayEquals(expected, actual);
-        // удостоверяемся, что заглушка была вызвана с нужным значением
-        // но это уже проверка "внутренней" реализации
-        // verify(repository).removeById(idToRemove);
+
     }
 
     @Test
