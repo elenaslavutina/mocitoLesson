@@ -4,16 +4,15 @@ import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 
+import java.time.LocalDate;
+
 @NoArgsConstructor
 @AllArgsConstructor
 @Data
 public class MovieInfo {
-    private int id;
-    private String title;
-    private int releaseDate;
-    private String genry;
+    private int       id;
+    private String    title;
+    private LocalDate releaseDate;
+    private String    genre;
 
-    public int getId() {
-        return id;
-    }
 }

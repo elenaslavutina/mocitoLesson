@@ -1,18 +1,18 @@
 package ru.netology.manager;
 
 
+import lombok.NoArgsConstructor;
 import ru.netology.domain.MovieInfo;
 
 public class MovieManager {
 
     private MovieInfo[] movies = new MovieInfo[0];
-    private int maxMovies = 10;
+    private int maxMovies;
 
     MovieManager(int maxMovies) {
         this.maxMovies = maxMovies;
     }
 
-    // this method will add movie to the collection we keep inside the class
     public void add(MovieInfo movie) {
         int length = movies.length + 1;
         MovieInfo[] tmp = new MovieInfo[length];
@@ -29,9 +29,14 @@ public class MovieManager {
     public MovieInfo[] getLastAdded() {
         int count = Math.min(movies.length, this.maxMovies);
 
-        MovieInfo[] items  = getAll();
-        MovieInfo[] result = new MovieInfo[count];
-        System.arraycopy(items, 0, result, 0, count);
+        MovieInfo[] result = null;
+
+        if (count > 0) {
+            MovieInfo[] items = getAll();
+
+            result = new MovieInfo[count];
+            System.arraycopy(items, 0, result, 0, count);
+        }
 
         return result;
     }
@@ -47,15 +52,27 @@ public class MovieManager {
     }
 
     public void removeById(int id) {
-        int length = movies.length - 1;
-        MovieInfo[] tmp = new MovieInfo[length];
         int index = 0;
+
         for (MovieInfo item : movies) {
             if (item.getId() != id) {
-                tmp[index] = item;
                 index++;
             }
         }
-        movies = tmp;
+
+        if (index < movies.length) {
+            index = 0;
+            int length = movies.length - 1; // need to keep the length in case of id is not found
+            MovieInfo[] tmp = new MovieInfo[length];
+
+
+            for (MovieInfo item : movies) {
+                if (item.getId() != id) {
+                    tmp[index] = item;
+                    index++;
+                }
+            }
+            movies = tmp;
+        }
     }
 }

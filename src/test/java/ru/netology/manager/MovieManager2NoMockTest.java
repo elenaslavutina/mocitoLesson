@@ -4,6 +4,7 @@ import org.junit.jupiter.api.Test;
 import ru.netology.domain.MovieInfo;
 import ru.netology.repository.MovieRepository;
 
+import java.time.LocalDate;
 import java.util.Random;
 
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
@@ -11,22 +12,22 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class MovieManager2NoMockTest {
 
-    MovieRepository repository = new MovieRepository();
+    private MovieRepository repository = new MovieRepository();
 
     private MovieInfo[] list_of_movies = new MovieInfo[]
             {
-                    new MovieInfo(1, "Lake house", 1998, "melodrama"),
-                    new MovieInfo(2, "Oscar", 1976, "comedy"),
-                    new MovieInfo(3, "Force majeure", 2010, "comedy"),
-                    new MovieInfo(4, "Terminator", 1998, "melodrama"),
-                    new MovieInfo(5, "Terminator-2", 1976, "comedy"),
-                    new MovieInfo(6, "Some movie", 2010, "comedy"),
-                    new MovieInfo(7, "Yesterday", 1998, "melodrama"),
-                    new MovieInfo(8, "Moscow never sleep", 1976, "comedy"),
-                    new MovieInfo(9, "Netology is awesome", 2010, "comedy"),
-                    new MovieInfo(10, "Today is the day", 1998, "melodrama"),
-                    new MovieInfo(11, "Hello NY", 1976, "comedy"),
-                    new MovieInfo(12, "Forest Gump", 2010, "comedy")
+                    new MovieInfo(1, "Lake house", LocalDate.parse("1998-06-01"), "melodrama"),
+                    new MovieInfo(2, "Oscar", LocalDate.parse("1976-06-01"), "comedy"),
+                    new MovieInfo(3, "Force majeure", LocalDate.parse("2010-06-01"), "comedy"),
+                    new MovieInfo(4, "Terminator", LocalDate.parse("1998-06-01"), "melodrama"),
+                    new MovieInfo(5, "Terminator-2", LocalDate.parse("1998-06-01"), "comedy"),
+                    new MovieInfo(6, "Some movie", LocalDate.parse("2010-06-01"), "comedy"),
+                    new MovieInfo(7, "Yesterday", LocalDate.parse("2010-06-01"), "melodrama"),
+                    new MovieInfo(8, "Moscow never sleep", LocalDate.parse("1976-06-01"), "comedy"),
+                    new MovieInfo(9, "Netology is awesome", LocalDate.parse("1976-06-01"), "comedy"),
+                    new MovieInfo(10, "Today is the day", LocalDate.parse("1998-06-01"), "melodrama"),
+                    new MovieInfo(11, "Hello NY", LocalDate.parse("1976-06-01"), "comedy"),
+                    new MovieInfo(12, "Forest Gump", LocalDate.parse("1998-06-01"), "comedy")
             };
 
     @Test
@@ -145,9 +146,10 @@ public class MovieManager2NoMockTest {
     public void shouldRemoveById() {
 
         MovieManager2 customManager = new MovieManager2(repository);
-        MovieInfo first = new MovieInfo(1, "Lake house", 1998, "melodrama");
-        MovieInfo second = new MovieInfo(2, "Oscar", 1976, "comedy");
-        MovieInfo third = new MovieInfo(3, "Force majeure", 2010, "comedy");
+
+        MovieInfo first  = new MovieInfo(1, "Lake house", LocalDate.parse("1998-06-01"), "melodrama");
+        MovieInfo second = new MovieInfo(2,  "Oscar", LocalDate.parse("1976-06-01"), "comedy");
+        MovieInfo third  = new MovieInfo(3,  "Force majeure", LocalDate.parse("2010-06-01"), "comedy");
 
         customManager.add(first);
         customManager.add(second);
@@ -162,7 +164,7 @@ public class MovieManager2NoMockTest {
 
 
     @Test
-    public void shouldReturnNullIfFindByIdCalledwithNonExistingID() {
+    public void shouldReturnNullIfNotExists() {
 
         MovieManager2 customManager = new MovieManager2(repository);
 

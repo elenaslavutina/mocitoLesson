@@ -5,65 +5,63 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.junit.jupiter.MockitoExtension;
 import ru.netology.domain.MovieInfo;
+
+import java.time.LocalDate;
+
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
 //@ExtendWith(MockitoExtension.class)
 public class MovieManagerTest {
 
-//   @Mock
-//   private CartRepository repository;
-//   @InjectMocks
-    private MovieManager manager = new MovieManager(10);
-    private MovieInfo first  = new MovieInfo(1, "Lake house", 1998, "melodrama");
-    private MovieInfo second = new MovieInfo(2,  "Oscar", 1976, "comedy");
-    private MovieInfo third  = new MovieInfo(3,  "Force majeure", 2010, "comedy");
-
     private MovieInfo[] list_of_movies = new MovieInfo[]
     {
-            new MovieInfo(1, "Lake house", 1998, "melodrama"),
-            new MovieInfo(2, "Oscar", 1976, "comedy"),
-            new MovieInfo(3, "Force majeure", 2010, "comedy"),
-            new MovieInfo(4, "Terminator", 1998, "melodrama"),
-            new MovieInfo(5, "Terminator-2", 1976, "comedy"),
-            new MovieInfo(6, "Some movie", 2010, "comedy"),
-            new MovieInfo(7, "Yesterday", 1998, "melodrama"),
-            new MovieInfo(8, "Moscow never sleep", 1976, "comedy"),
-            new MovieInfo(9, "Netology is awesome", 2010, "comedy"),
-            new MovieInfo(10, "Today is the day", 1998, "melodrama"),
-            new MovieInfo(11, "Hello NY", 1976, "comedy"),
-            new MovieInfo(12, "Forest Gump", 2010, "comedy")
+            new MovieInfo(1, "Lake house", LocalDate.parse("1998-06-01"), "melodrama"),
+            new MovieInfo(2, "Oscar", LocalDate.parse("1976-06-01"), "comedy"),
+            new MovieInfo(3, "Force majeure", LocalDate.parse("2010-06-01"), "comedy"),
+            new MovieInfo(4, "Terminator", LocalDate.parse("1998-06-01"), "melodrama"),
+            new MovieInfo(5, "Terminator-2", LocalDate.parse("1998-06-01"), "comedy"),
+            new MovieInfo(6, "Some movie", LocalDate.parse("2010-06-01"), "comedy"),
+            new MovieInfo(7, "Yesterday", LocalDate.parse("2010-06-01"), "melodrama"),
+            new MovieInfo(8, "Moscow never sleep", LocalDate.parse("1976-06-01"), "comedy"),
+            new MovieInfo(9, "Netology is awesome", LocalDate.parse("1976-06-01"), "comedy"),
+            new MovieInfo(10, "Today is the day", LocalDate.parse("1998-06-01"), "melodrama"),
+            new MovieInfo(11, "Hello NY", LocalDate.parse("1976-06-01"), "comedy"),
+            new MovieInfo(12, "Forest Gump", LocalDate.parse("1998-06-01"), "comedy")
     };
 
-
-@BeforeEach
-    public void setUp() {
-        manager.add(first);
-        manager.add(second);
-        manager.add(third);
-    }
 
     @Test
     public void shouldRemoveIfExists() {
         int idToRemove = 1;
 
-        manager.removeById(idToRemove);
-        MovieInfo[] expected = new MovieInfo[]{third, second};
-        MovieInfo[] actual = manager.getAll();
-        assertArrayEquals(expected, actual);
+        MovieManager customManager = new MovieManager(10);
 
+        customManager.add(list_of_movies[0]);
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
+
+        customManager.removeById(idToRemove);
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
+        MovieInfo[] actual = customManager.getAll();
+        assertArrayEquals(expected, actual);
     }
 
     @Test
     public void shouldNotRemoveIfNotExists() {
         int idToRemove = 1;
 
-        manager.removeById(idToRemove);
-        MovieInfo[] expected = new MovieInfo[]{third, second};
-        MovieInfo[] actual = manager.getAll();
+        MovieManager customManager = new MovieManager(10);
+
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
+
+        customManager.removeById(idToRemove);
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
+        MovieInfo[] actual = customManager.getAll();
 
         assertArrayEquals(expected, actual);
-
     }
 
     @Test
@@ -111,6 +109,41 @@ public class MovieManagerTest {
     }
 
     @Test
+    public void  shouldListNofingifNegative() {
+
+        int maxMovies = -1;
+        MovieManager customManager = new MovieManager(maxMovies);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(null, actual);
+
+    }
+
+    @Test
+    public void  shouldListNofingifZero() {
+
+        int maxMovies = -1;
+        MovieManager customManager = new MovieManager(maxMovies);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(null, actual);
+
+    }
+
+
+    @Test
     public void shouldListAllMoviesIfLessThanDefault() {
 
         int maxMovies   = 10;
@@ -134,5 +167,29 @@ public class MovieManagerTest {
     }
 
 
-}
+    @Test
+    public void shouldListListOne() {
 
+        int maxMovies   = 1;
+
+        MovieManager customManager = new MovieManager(maxMovies);
+
+        // add only limited number which is less then maxMovies
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        MovieInfo expected = list_of_movies[list_of_movies.length-1];
+
+        assertEquals(1, actual.length);
+        assertEquals(expected, actual[0]);
+    }
+
+
+
+
+
+
+}
