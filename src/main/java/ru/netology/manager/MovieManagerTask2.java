@@ -7,15 +7,15 @@ import ru.netology.repository.MovieRepository;
 
 @NoArgsConstructor
 @Data
-public class MovieManager2 {
+public class MovieManagerTask2 {
     private MovieRepository movieRepository = new MovieRepository();
     private int maxMovies = 10;
 
-    public MovieManager2(MovieRepository repository) {
+    public MovieManagerTask2(MovieRepository repository) {
         this.movieRepository = repository;
     }
 
-    public MovieManager2(MovieRepository repository, int maxMovies) {
+    public MovieManagerTask2(MovieRepository repository, int maxMovies) {
         this.movieRepository = repository;
         this.maxMovies = maxMovies;
     }

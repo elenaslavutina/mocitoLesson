@@ -10,7 +10,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MovieManager2NoMockTest {
+public class MovieManagerTask2NoMockTest {
 
     private MovieRepository repository = new MovieRepository();
 
@@ -36,7 +36,7 @@ public class MovieManager2NoMockTest {
         int maxMovies = 10;
 
         // use constructor with only repository as param
-        MovieManager2 customManager = new MovieManager2(repository);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -58,7 +58,7 @@ public class MovieManager2NoMockTest {
     public void shouldListLastCustomNumberOfMovies() {
 
         int maxMovies = 5;
-        MovieManager2 customManager = new MovieManager2(repository, maxMovies);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository, maxMovies);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -81,7 +81,7 @@ public class MovieManager2NoMockTest {
 
         int addedMovies = 7;
 
-        MovieManager2 customManager = new MovieManager2(repository, 10);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository, 10);
 
         // add only limited number which is less then maxMovies
         for (int i = 0; i < addedMovies; i++) {
@@ -102,7 +102,7 @@ public class MovieManager2NoMockTest {
     @Test
     public void shouldRemoveAll() {
 
-        MovieManager2 customManager = new MovieManager2(repository);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -121,7 +121,7 @@ public class MovieManager2NoMockTest {
     @Test
     public void shouldFindById() {
 
-        MovieManager2 customManager = new MovieManager2(repository);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -145,7 +145,7 @@ public class MovieManager2NoMockTest {
     @Test
     public void shouldRemoveById() {
 
-        MovieManager2 customManager = new MovieManager2(repository);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
 
         MovieInfo first  = new MovieInfo(1, "Lake house", LocalDate.parse("1998-06-01"), "melodrama");
         MovieInfo second = new MovieInfo(2,  "Oscar", LocalDate.parse("1976-06-01"), "comedy");
@@ -166,7 +166,7 @@ public class MovieManager2NoMockTest {
     @Test
     public void shouldReturnNullIfNotExists() {
 
-        MovieManager2 customManager = new MovieManager2(repository);
+        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {

@@ -186,10 +186,3 @@ public class MovieManagerTest {
         assertEquals(1, actual.length);
         assertEquals(expected, actual[0]);
     }
-
-
-
-
-
-
-}

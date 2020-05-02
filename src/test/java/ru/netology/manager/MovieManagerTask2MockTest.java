@@ -1,6 +1,5 @@
 package ru.netology.manager;
 
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
@@ -16,12 +15,12 @@ import static org.mockito.Mockito.*;
 
 
 @ExtendWith(MockitoExtension.class)
-public class MovieManager2MockTest {
+public class MovieManagerTask2MockTest {
 
     @Mock
     private MovieRepository repository;
     @InjectMocks
-    private MovieManager2   manager;
+    private MovieManagerTask2 manager;
 
     @Test
     public void shouldRemoveIfExists() {
