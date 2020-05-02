@@ -20,16 +20,28 @@ public class MovieRepository {
     }
 
     public void removeById(int id) {
-        int length = items.length - 1;
-        MovieInfo[] tmp = new MovieInfo[length];
         int index = 0;
+
         for (MovieInfo item : items) {
             if (item.getId() != id) {
-                tmp[index] = item;
                 index++;
             }
         }
-        items = tmp;
+
+        if (index < items.length) {
+            index = 0;
+            int length = items.length - 1; // need to keep the length in case of id is not found
+            MovieInfo[] tmp = new MovieInfo[length];
+
+
+            for (MovieInfo item : items) {
+                if (item.getId() != id) {
+                    tmp[index] = item;
+                    index++;
+                }
+            }
+            items = tmp;
+        }
     }
 
     public MovieInfo findById(int id) {

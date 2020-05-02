@@ -10,7 +10,7 @@ import java.util.Random;
 import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class MovieManagerTask2NoMockTest {
+public class MovieManagerNoMockTest {
 
     private MovieRepository repository = new MovieRepository();
 
@@ -30,35 +30,12 @@ public class MovieManagerTask2NoMockTest {
                     new MovieInfo(12, "Forest Gump", LocalDate.parse("1998-06-01"), "comedy")
             };
 
-    @Test
-    public void shouldListLast10Movies() {
-
-        int maxMovies = 10;
-
-        // use constructor with only repository as param
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
-
-        // add all the items
-        for (int i = 0; i < list_of_movies.length; i++) {
-            customManager.add(list_of_movies[i]);
-        }
-
-        // add items for expected output
-        MovieInfo[] expected = new MovieInfo[maxMovies];
-        for (int i = 0; i < maxMovies; i++) {
-            expected[i] = list_of_movies[(list_of_movies.length - 1) - i];
-        }
-
-        MovieInfo[] actual = customManager.getLastAdded();
-
-        assertArrayEquals(expected, actual);
-    }
 
     @Test
     public void shouldListLastCustomNumberOfMovies() {
 
         int maxMovies = 5;
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository, maxMovies);
+        MovieManager customManager = new MovieManager(repository, maxMovies);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -81,7 +58,7 @@ public class MovieManagerTask2NoMockTest {
 
         int addedMovies = 7;
 
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository, 10);
+        MovieManager customManager = new MovieManager(repository, 10);
 
         // add only limited number which is less then maxMovies
         for (int i = 0; i < addedMovies; i++) {
@@ -102,7 +79,7 @@ public class MovieManagerTask2NoMockTest {
     @Test
     public void shouldRemoveAll() {
 
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
+        MovieManager customManager = new MovieManager(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -121,7 +98,7 @@ public class MovieManagerTask2NoMockTest {
     @Test
     public void shouldFindById() {
 
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
+        MovieManager customManager = new MovieManager(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
@@ -145,18 +122,14 @@ public class MovieManagerTask2NoMockTest {
     @Test
     public void shouldRemoveById() {
 
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
+        MovieManager customManager = new MovieManager(repository);
 
-        MovieInfo first  = new MovieInfo(1, "Lake house", LocalDate.parse("1998-06-01"), "melodrama");
-        MovieInfo second = new MovieInfo(2,  "Oscar", LocalDate.parse("1976-06-01"), "comedy");
-        MovieInfo third  = new MovieInfo(3,  "Force majeure", LocalDate.parse("2010-06-01"), "comedy");
-
-        customManager.add(first);
-        customManager.add(second);
-        customManager.add(third);
+        customManager.add(list_of_movies[0]);
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
 
         customManager.removeById(2);
-        MovieInfo[] expected = new MovieInfo[]{third, first};
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[0]};
         MovieInfo[] actual = customManager.getAll();
         assertArrayEquals(expected, actual);
 
@@ -166,16 +139,14 @@ public class MovieManagerTask2NoMockTest {
     @Test
     public void shouldReturnNullIfNotExists() {
 
-        MovieManagerTask2 customManager = new MovieManagerTask2(repository);
+        MovieManager customManager = new MovieManager(repository);
 
         // add all the items
         for (int i = 0; i < list_of_movies.length; i++) {
             customManager.add(list_of_movies[i]);
         }
 
-        Random rand = new Random();
-
-        int idx = list_of_movies.length + rand.nextInt(100);
+        int idx = 1000;
 
         // add items for expected output
         MovieInfo expected = null;
@@ -184,5 +155,98 @@ public class MovieManagerTask2NoMockTest {
         MovieInfo actual = customManager.findById(idx + 1);
 
         assertEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldNotRemoveIfNotExists() {
+        int idToRemove = 1;
+
+        MovieManager customManager = new MovieManager(repository);
+
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
+
+        customManager.removeById(idToRemove);
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
+        MovieInfo[] actual = customManager.getAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldListLast10Movies() {
+
+        int maxMovies = 10;
+        MovieManager customManager = new MovieManager(repository);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        // add items for expected output
+        MovieInfo[] expected = new MovieInfo[maxMovies];
+        for (int i = 0; i < maxMovies; i++) {
+            expected[i] = list_of_movies[(list_of_movies.length - 1) - i];
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(expected, actual);
+    }
+
+    @Test
+    public void shouldListNofingifNegative() {
+
+        int maxMovies = -1;
+        MovieManager customManager = new MovieManager(repository, maxMovies);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(null, actual);
+
+    }
+
+    @Test
+    public void shouldListNofingifZero() {
+
+        int maxMovies = 0;
+        MovieManager customManager = new MovieManager(repository, maxMovies);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(null, actual);
+
+    }
+
+
+    @Test
+    public void shouldListListOne() {
+
+        int maxMovies = 1;
+
+        MovieManager customManager = new MovieManager(repository, maxMovies);
+
+        // add only limited number which is less then maxMovies
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        MovieInfo expected = list_of_movies[list_of_movies.length - 1];
+
+        assertEquals(1, actual.length);
+        assertEquals(expected, actual[0]);
     }
 }
