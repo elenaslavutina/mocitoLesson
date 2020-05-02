@@ -128,7 +128,7 @@ public class MovieManagerTest {
     @Test
     public void  shouldListNofingifZero() {
 
-        int maxMovies = -1;
+        int maxMovies = 0;
         MovieManager customManager = new MovieManager(maxMovies);
 
         // add all the items
