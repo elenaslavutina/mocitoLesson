@@ -5,14 +5,20 @@ import lombok.NoArgsConstructor;
 import ru.netology.domain.MovieInfo;
 import ru.netology.repository.MovieRepository;
 
-@NoArgsConstructor
-@Data
+
 public class MovieManager {
-    private MovieRepository movieRepository = new MovieRepository();
-    private int maxMovies = 10;
+
+    private MovieRepository movieRepository;
+    private int maxMovies;
+
+    public MovieManager() {
+        this.movieRepository = new MovieRepository();
+        this.maxMovies = 10;
+    }
 
     public MovieManager(MovieRepository repository) {
         this.movieRepository = repository;
+        this.maxMovies       = 10;
     }
 
     public MovieManager(MovieRepository repository, int maxMovies) {
