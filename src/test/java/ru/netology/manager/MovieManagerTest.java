@@ -12,7 +12,6 @@ import static org.junit.jupiter.api.Assertions.assertArrayEquals;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 
-//@ExtendWith(MockitoExtension.class)
 public class MovieManagerTest {
 
     private MovieInfo[] list_of_movies = new MovieInfo[]
@@ -65,6 +64,40 @@ public class MovieManagerTest {
     }
 
     @Test
+    public void shouldRemoveIfExists_simple() {
+        int idToRemove = 1;
+
+        MovieManager customManager = new MovieManager(10);
+
+        customManager.add(list_of_movies[0]);
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
+
+        customManager.simpleRemoveById(idToRemove);
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
+        MovieInfo[] actual = customManager.getAll();
+        assertArrayEquals(expected, actual);
+    }
+
+
+    @Test
+    public void shouldNotRemoveIfNotExists_simple() {
+        int idToRemove = 1;
+
+        MovieManager customManager = new MovieManager(10);
+
+        customManager.add(list_of_movies[1]);
+        customManager.add(list_of_movies[2]);
+
+        customManager.simpleRemoveById(idToRemove);
+        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
+        MovieInfo[] actual = customManager.getAll();
+
+        assertArrayEquals(expected, actual);
+    }
+
+
+    @Test
     public void shouldListLast10Movies() {
 
         int maxMovies = 10;
@@ -111,7 +144,8 @@ public class MovieManagerTest {
     @Test
     public void  shouldListNofingifNegative() {
 
-        int maxMovies = -1;
+        int maxMovies  = -1;
+        int defaultVal = 10;
         MovieManager customManager = new MovieManager(maxMovies);
 
         // add all the items
@@ -119,16 +153,24 @@ public class MovieManagerTest {
             customManager.add(list_of_movies[i]);
         }
 
+        // add items for expected output
+        MovieInfo[] expected = new MovieInfo[defaultVal];
+        for (int i = 0; i < defaultVal; i++) {
+            expected[i] = list_of_movies[(list_of_movies.length - 1) - i];
+        }
+
         MovieInfo[] actual = customManager.getLastAdded();
 
-        assertArrayEquals(null, actual);
+        assertArrayEquals(expected, actual);
 
     }
 
     @Test
     public void  shouldListNofingifZero() {
 
-        int maxMovies = 0;
+        int maxMovies  = 0;
+        int defaultVal = 10;
+
         MovieManager customManager = new MovieManager(maxMovies);
 
         // add all the items
@@ -138,8 +180,13 @@ public class MovieManagerTest {
 
         MovieInfo[] actual = customManager.getLastAdded();
 
-        assertArrayEquals(null, actual);
+        // add items for expected output
+        MovieInfo[] expected = new MovieInfo[defaultVal];
+        for (int i = 0; i < defaultVal; i++) {
+            expected[i] = list_of_movies[(list_of_movies.length - 1) - i];
+        }
 
+        assertArrayEquals(expected, actual);
     }
 
 
@@ -186,10 +233,4 @@ public class MovieManagerTest {
         assertEquals(1, actual.length);
         assertEquals(expected, actual[0]);
     }
-
-
-
-
-
-
 }

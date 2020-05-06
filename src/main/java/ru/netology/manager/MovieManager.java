@@ -10,7 +10,10 @@ public class MovieManager {
     private int maxMovies;
 
     MovieManager(int maxMovies) {
-        this.maxMovies = maxMovies;
+        if (maxMovies > 0)
+            this.maxMovies = maxMovies;
+        else
+            this.maxMovies = 10;
     }
 
     public void add(MovieInfo movie) {
@@ -20,10 +23,6 @@ public class MovieManager {
         int lastIndex = tmp.length - 1;
         tmp[lastIndex] = movie;
         movies = tmp;
-    }
-
-    public MovieInfo[] findAll() {
-        return movies;
     }
 
     public MovieInfo[] getLastAdded() {
@@ -42,11 +41,11 @@ public class MovieManager {
     }
 
     public MovieInfo[] getAll() {
-        MovieInfo[] items  = findAll();
-        MovieInfo[] result = new MovieInfo[items.length];
-        for (int i = 0; i < result.length; i++) {
-            int index = items.length - i - 1;
-            result[i] = items[index];
+
+        MovieInfo[] result = new MovieInfo[movies.length];
+        for (int i = 0; i < movies.length; i++) {
+            int index = movies.length - i - 1;
+            result[i] = movies[index];
         }
         return result;
     }
@@ -74,5 +73,22 @@ public class MovieManager {
             }
             movies = tmp;
         }
+    }
+
+
+    public void simpleRemoveById(int id) {
+
+        int index  = 0;
+        int length = movies.length-1; // need to keep the length in case of id is not found
+        MovieInfo[] tmp = new MovieInfo[length];
+
+        for (MovieInfo item : movies) {
+            if (item.getId() != id) {
+                tmp[index] = item;
+                index++;
+            }
+        }
+
+        movies = tmp;
     }
 }
