@@ -74,21 +74,4 @@ public class MovieManager {
             movies = tmp;
         }
     }
-
-
-    public void simpleRemoveById(int id) {
-
-        int index  = 0;
-        int length = movies.length-1; // need to keep the length in case of id is not found
-        MovieInfo[] tmp = new MovieInfo[length];
-
-        for (MovieInfo item : movies) {
-            if (item.getId() != id) {
-                tmp[index] = item;
-                index++;
-            }
-        }
-
-        movies = tmp;
-    }
 }

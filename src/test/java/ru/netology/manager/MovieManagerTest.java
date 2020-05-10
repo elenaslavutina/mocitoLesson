@@ -64,40 +64,6 @@ public class MovieManagerTest {
     }
 
     @Test
-    public void shouldRemoveIfExists_simple() {
-        int idToRemove = 1;
-
-        MovieManager customManager = new MovieManager(10);
-
-        customManager.add(list_of_movies[0]);
-        customManager.add(list_of_movies[1]);
-        customManager.add(list_of_movies[2]);
-
-        customManager.simpleRemoveById(idToRemove);
-        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
-        MovieInfo[] actual = customManager.getAll();
-        assertArrayEquals(expected, actual);
-    }
-
-
-    @Test
-    public void shouldNotRemoveIfNotExists_simple() {
-        int idToRemove = 1;
-
-        MovieManager customManager = new MovieManager(10);
-
-        customManager.add(list_of_movies[1]);
-        customManager.add(list_of_movies[2]);
-
-        customManager.simpleRemoveById(idToRemove);
-        MovieInfo[] expected = new MovieInfo[]{list_of_movies[2], list_of_movies[1]};
-        MovieInfo[] actual = customManager.getAll();
-
-        assertArrayEquals(expected, actual);
-    }
-
-
-    @Test
     public void shouldListLast10Movies() {
 
         int maxMovies = 10;
@@ -140,6 +106,29 @@ public class MovieManagerTest {
 
         assertArrayEquals(expected, actual);
     }
+
+    @Test
+    public void shouldListMoreThanDefault() {
+
+        int maxMovies = 12;
+        MovieManager customManager = new MovieManager(maxMovies);
+
+        // add all the items
+        for (int i = 0; i < list_of_movies.length; i++) {
+            customManager.add(list_of_movies[i]);
+        }
+
+        // add items for expected output
+        MovieInfo[] expected = new MovieInfo[maxMovies];
+        for (int i = 0; i < maxMovies; i++) {
+            expected[i] = list_of_movies[(list_of_movies.length - 1) - i];
+        }
+
+        MovieInfo[] actual = customManager.getLastAdded();
+
+        assertArrayEquals(expected, actual);
+    }
+
 
     @Test
     public void  shouldListNofingifNegative() {
